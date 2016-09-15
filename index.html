@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Password Security</title>
+  <script src="hsimp/build/hsimp.min.js"></script>
+
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div class="container">
+    	<div class="content">
+        	<h1 class="header title">How Secure Is My Password?</h1>
+            <input type="password" placeholder="ENTER PASSWORD" id="password-box" class="password-input">
+            <div id="password-time" class="hsimp-time"></div>
+            <ul id="password-checks" class="hsimp-checks"></ul>
+
+            <div class="sponsor">
+            	<p class="sponsor_text">Sponsored by Programming inc.</p></div>
+                <div class="social">
+                	<div class="social__twitter">
+                    	<a href="https://twitter.com/PlusHoliday" target="_blank"> <img src="twiter.jpg"></a>
+                    </div>
+                    <div class="social__facebook-wrapper">
+                    	<a href="https://www.facebook.com/plusholiday.travel"><img src="facebook.png"></a>
+                    </div>
+                </div>
+                <div class="footer">
+                	<p>Sponsored by testing</p>
+
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+
+    <script>
+        (function (doc) {
+            var passwordInput = doc.getElementById("password-box"),
+                timeDiv = doc.getElementById("password-time"),
+                checksList = doc.getElementById("password-checks");
+
+            // Code to render the time returned by HSIMP
+            var renderTime = function (time, input) {
+                timeDiv.innerHTML = time || "";
+            };
+
+            // Code to output the checks returned by HSIMP
+            var renderChecks = function (checks, input) {
+                checksList.innerHTML = "";
+
+                for (var i = 0, l = checks.length; i < l; i++) {
+                    var li = doc.createElement("li"),
+                        title = doc.createElement("h2"),
+                        message = doc.createElement("p");
+
+                    title.innerHTML = checks[i].name;
+                    li.appendChild(title);
+
+                    message.innerHTML = checks[i].message;
+                    li.appendChild(message);
+
+                    checksList.appendChild(li);
+                }
+            };
+
+            // Setup the HSIMP object
+            var attachTo = hsimp({
+                options: {
+                    calculationsPerSecond: 10e9, // 10 billion calculations per second
+                    good: 31557600e9, // 1 billion years
+                    ok: 31557600e3 // 1 thousand years
+                },
+                outputTime: renderTime,
+                outputChecks: renderChecks
+            });
+
+            // Run the HSIMP
+            attachTo(passwordInput);
+        }(this.document));
+    </script>
+
+ </body>
+</html>
